@@ -6,6 +6,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,12 +18,14 @@ public class MainFrame extends JFrame {
     private final CardLayout cards = new CardLayout();
     private final JPanel content = new JPanel(cards);
     private final Map<String, JButton> navButtons = new LinkedHashMap<>();
+    private AuditService auditService;
 
     public MainFrame(String user, String role) {
         setTitle("Putusan Dashboard | Legal Case Management");
         setDefaultCloseOperation(EXIT_ON_CLOSE); setMinimumSize(new Dimension(1050, 680)); setSize(1280, 800); setLocationRelativeTo(null);
 
         PutusanRepository repo = new PutusanRepository(); AuditService audit = new AuditService();
+        this.auditService = audit;
         PutusanService service = new PutusanService(repo, audit);
         try { repo.load(Path.of("data", "putusan-50.csv")); }
         catch (Exception ex) { JOptionPane.showMessageDialog(this, "Gagal memuat dataset: " + ex.getMessage(), "Peringatan", JOptionPane.WARNING_MESSAGE); }
@@ -68,7 +74,34 @@ public class MainFrame extends JFrame {
         JPanel profile = new JPanel(new FlowLayout(FlowLayout.RIGHT, 9, 0)); profile.setOpaque(false);
         JLabel avatar = new JLabel(user.isBlank()?"U":user.substring(0,1).toUpperCase()); avatar.setOpaque(true); avatar.setBackground(new Color(220,242,240)); avatar.setForeground(UiStyle.TEAL); avatar.setHorizontalAlignment(SwingConstants.CENTER); avatar.setFont(new Font("SansSerif", Font.BOLD, 13)); avatar.setPreferredSize(new Dimension(32,32));
         JPanel who = new JPanel(); who.setOpaque(false); who.setLayout(new BoxLayout(who,BoxLayout.Y_AXIS)); JLabel u = new JLabel(user); u.setFont(new Font("SansSerif",Font.BOLD,12)); JLabel r = new JLabel(role); r.setForeground(UiStyle.MUTED); r.setFont(new Font("SansSerif",Font.PLAIN,10)); who.add(u); who.add(r);
-        profile.add(avatar); profile.add(who); p.add(crumb,BorderLayout.WEST); p.add(profile,BorderLayout.EAST); return p;
+        profile.add(avatar); profile.add(who);
+        JButton logout = new JButton("Keluar");
+        logout.setFocusPainted(false);
+        logout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        logout.addActionListener(e -> {
+            int choice = JOptionPane.showConfirmDialog(this,
+                "Yakin ingin keluar dari dashboard?", "Konfirmasi Logout",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                auditService.record(user, "LOGOUT", "Role " + role);
+                try {
+                    Path logFile = Path.of("logs", "audit-log.txt");
+                    Files.createDirectories(logFile.getParent());
+                    String safeUser = user.replace("\n", " ").replace("\r", " ");
+                    Files.writeString(logFile, LocalDateTime.now() + " | " + safeUser
+                                    + " | LOGOUT | Role " + role + System.lineSeparator(),
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Sesi ditutup, tetapi catatan logout gagal disimpan: " + ex.getMessage(),
+                            "Peringatan audit", JOptionPane.WARNING_MESSAGE);
+                }
+                dispose();
+                SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
+            }
+        });
+        profile.add(logout);
+        p.add(crumb,BorderLayout.WEST); p.add(profile,BorderLayout.EAST); return p;
     }
 
     private void showPage(String name) {

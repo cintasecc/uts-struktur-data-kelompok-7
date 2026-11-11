@@ -7,6 +7,7 @@ public class CsvReader {
   List<Putusan> out=new ArrayList<>();
   try(BufferedReader br=Files.newBufferedReader(path,StandardCharsets.UTF_8)){
    String line=br.readLine();if(line==null)return out;List<String> headers=parse(line);
+   if(!headers.isEmpty() && headers.get(0).startsWith("\uFEFF")) headers.set(0,headers.get(0).substring(1));
    while((line=br.readLine())!=null){if(line.isBlank())continue;List<String> r=parse(line);if(r.size()!=headers.size())throw new IOException("Jumlah kolom tidak sesuai pada baris "+(out.size()+2));
     Map<String,String> m=new HashMap<>();for(int i=0;i<headers.size();i++)m.put(headers.get(i),blank(r.get(i)));
     out.add(new Putusan(m.get("caseId"),m.get("nomorPerkara"),m.get("pengadilan"),date(m.get("tanggalPutusan")),m.get("terdakwaKode"),m.get("jenisNarkotika"),dbl(m.get("beratBarangBuktiGram")),m.get("pasalDakwaan"),m.get("pasalTerbukti"),integer(m.get("tuntutanBulan")),integer(m.get("vonisBulan")),lng(m.get("dendaRupiah")),m.get("barangBukti"),m.get("keadaanMemberatkan"),m.get("keadaanMeringankan"),m.get("sourcePages")));
