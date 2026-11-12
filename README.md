@@ -24,7 +24,7 @@ Login masih berupa simulasi lokal: username tidak boleh kosong, password belum d
 ## Dataset dan provenance
 `data/putusan-50.csv` berisi 50 putusan dan 16 atribut. `data/data-provenance.csv` dan `docs/data-provenance.csv` menyimpan catatan provenance. Nilai yang tidak tersedia tetap kosong/null dan tidak diisi dengan tebakan.
 
-**Catatan cakupan:** seluruh 50 dokumen dalam paket ini berasal dari Pengadilan Negeri Pekanbaru. Jika rubrik mensyaratkan beberapa pengadilan negeri, dataset perlu dilengkapi sumber putusan dari pengadilan lain; aplikasi tidak mengubah asal dokumen.
+**Catatan cakupan:** seluruh 50 dokumen dalam paket ini berasal dari Pengadilan Negeri Pekanbaru. J
 
 ### 1. Login
 ![Login](docs/screenshots/login.png)
