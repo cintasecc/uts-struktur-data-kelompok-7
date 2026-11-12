@@ -28,19 +28,13 @@ Login masih berupa simulasi lokal: username tidak boleh kosong, password belum d
 
 ### 1. Login
 ![Login](docs/screenshots/login.png)
-
 ### 2. Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
-
 ### 3. Data Putusan
 ![Data Putusan](docs/screenshots/data.png)
-
 ### 4. Import PDF
-![Import PDF](docs/screenshots/.png)
-
+![Search](docs/screenshots/search.png)
 ### 5. Search dan Filter
 ![Search dan Filter](docs/screenshots/search.png)
-
 ### 6. Audit Log
-![Audit Log](docs/screenshots/stat.png)
-
+![Statistik](docs/screenshots/stat.png)
