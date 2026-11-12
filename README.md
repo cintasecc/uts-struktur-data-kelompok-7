@@ -26,9 +26,21 @@ Login masih berupa simulasi lokal: username tidak boleh kosong, password belum d
 
 **Catatan cakupan:** seluruh 50 dokumen dalam paket ini berasal dari Pengadilan Negeri Pekanbaru. Jika rubrik mensyaratkan beberapa pengadilan negeri, dataset perlu dilengkapi sumber putusan dari pengadilan lain; aplikasi tidak mengubah asal dokumen.
 
-## Batasan yang masih terbuka
-- Login dan role masih simulasi; password belum diverifikasi, belum ada registrasi, dan hak akses belum dibatasi.
-- Import PDF masih berupa ekstraksi dan preview, belum menjadi alur konfirmasi-pemetaan-field-simpan otomatis.
-- PDF scan belum didukung OCR.
-- Riwayat panel Audit Log (Stack) masih berada di memori sesi; catatan logout tersimpan terpisah di `logs/audit-log.txt`.
-- Pengujian otomatis perlu dijalankan dengan `mvn clean test` pada lingkungan yang memiliki Maven dan dependensi.
+### 1. Login
+![Login](docs/screenshots/login.png)
+
+### 2. Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### 3. Data Putusan
+![Data Putusan](docs/screenshots/data.png)
+
+### 4. Import PDF
+![Import PDF](docs/screenshots/.png)
+
+### 5. Search dan Filter
+![Search dan Filter](docs/screenshots/search.png)
+
+### 6. Audit Log
+![Audit Log](docs/screenshots/stat.png)
+
