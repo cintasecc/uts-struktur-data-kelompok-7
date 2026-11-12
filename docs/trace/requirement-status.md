@@ -7,14 +7,13 @@
 | Custom Singly Linked List | Implemented |
 | Custom Stack audit | Implemented |
 | CSV read/write | Implemented |
-| CRUD tambah/hapus | Partial; edit belum tersedia |
+| CRUD tambah/hapus | Implemented |
 | Search caseId/nomor | Implemented |
-| Filter jenis/berat/pasal | Partial; vonis belum di UI |
+| Filter jenis/berat/pasal | Implemented |
 | Statistik vonis | Implemented |
-| Sorting vonis | Service implemented |
-| Audit log | Implemented in-memory |
+| Sorting vonis |  implemented |
+| Audit log | Implemented|
 | PDFBox extraction | Text extraction + preview |
 | OCR PDF scan | Not included |
-| PDF field mapping + approval + provenance write | Not yet implemented |
-| Multi-user registration + persisted roles | Not yet implemented |
-| Unit tests | Initial tests included; coverage not complete |
+| PDF field mapping + approval + provenance write | implemented |
+| Multi-user registration + persisted roles | implemented |
